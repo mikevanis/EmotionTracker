@@ -223,9 +223,11 @@ if __name__ == '__main__':
                 if analyse is True:
                     results = recognize(current_frame)
                     if results is not None:
-                        if results.__len__() > 0:
+                        if len(results) > 0:
                             data_image = draw_data(results)
                             light.ChangeDutyCycle(100)
+                        else:
+                            print("No faces found")
                     else:
                         print("Results is none")
                     analyse = False
