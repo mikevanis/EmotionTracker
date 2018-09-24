@@ -67,6 +67,10 @@ def recognize(image):
     except requests.exceptions.HTTPError:
         print("HTTP Error. Request failed.")
         return None
+    except requests.exceptions.ConnectionError as e:
+        print("Connection Error!")
+        print(e)
+        return None
 
 def draw_data(data_object, x=10, y=30, w=int(1920/2), h=1080, padding_bottom=30):
     output_image = np.zeros((h, w, 3), np.uint8)
