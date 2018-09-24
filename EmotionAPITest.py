@@ -3,7 +3,6 @@ import cv2
 import requests
 
 KEY = '0c3c2f2a95d94470950462f484cc6cc7'
-#ENDPOINT = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect'
 ENDPOINT = 'https://uksouth.api.cognitive.microsoft.com/face/v1.0/detect'
 
 headers = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': KEY}
@@ -24,7 +23,7 @@ def draw_objects(objects, frame):
 
 def recognize(image):
     r, buf = cv2.imencode(".jpg", image)
-    image_data = bytearray(buf)
+    image_data = bytes(buf)
     try:
         response = requests.post(data=image_data, url=ENDPOINT, headers=headers, params=params)
         analysis = response.json()

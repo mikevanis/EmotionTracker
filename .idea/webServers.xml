@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="af3f2bdd-e6ed-4e90-8ce6-8f5e45bd5e39" name="PiDeploy" url="http://raspberrypi.local">
+        <fileTransfer host="raspberrypi.local" port="22" rootFolder="/home/pi/EmotionTracker" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
