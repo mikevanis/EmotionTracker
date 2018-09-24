@@ -28,6 +28,7 @@ def recognize(image):
         response = requests.post(data=image_data, url=ENDPOINT, headers=headers, params=params)
         analysis = response.json()
         print(analysis)
+        print(len(analysis))
     except requests.exceptions.HTTPError:
         print("HTTP Error. Request failed.")
 
