@@ -85,74 +85,92 @@ def draw_data(data_object, x=10, y=30, w=int(1920/2), h=1080, padding_bottom=30)
 
         face_attributes = face.get('faceAttributes', {})
 
-        # Emotions
-        emotions = face_attributes.get('emotion', {})
-        emotions_sorted = list(reversed(sorted(emotions.items(), key=lambda kv: kv[1])))
-        first_emotion, confidence = emotions_sorted[0]
-        draw_text(output_image, "Emotion: " + first_emotion + " " + str(confidence*100) + "%", x, y, bold=True)
-        del emotions_sorted[0]
-        y = y + padding_bottom
-        y = draw_attributes(output_image, x, y, padding_bottom, emotions_sorted)
-        y = y + padding_bottom
-
-        # Gender
-        gender_val = face_attributes['gender']
-        draw_text(output_image, "Gender: " + gender_val, x, y, bold=True)
-        y = y + padding_bottom
-        y = y + padding_bottom
-
-        # Age
-        age_val = face_attributes['age']
-        draw_text(output_image, "Age: " + str(age_val), x, y, bold=True)
-        y = y + padding_bottom
-        y = y + padding_bottom
-
-        # Hair
-        hair_attributes = face_attributes['hair']
-        hair_color = hair_attributes['hairColor']
-        hair_dict = {}
-        for c in hair_color:
-            key = c['color']
-            val = c['confidence']
-            hair_dict[key] = val
-        hair_sorted = list(reversed(sorted(hair_dict.items(), key=lambda kv: kv[1])))
-        first_hair, confidence = hair_sorted[0]
-        draw_text(output_image, "Hair: " + first_hair + " " + str(confidence*100) + "%", x, y, bold=True)
-        del hair_sorted[0]
-        y = y + padding_bottom
-        y = draw_attributes(output_image, x, y, padding_bottom, hair_sorted)
-        y = y + padding_bottom
-
-        # Accessories
-        accessories_attributes = face_attributes['accessories']
-        accessories_dict = {}
-        for a in accessories_attributes:
-            key = a['type']
-            val = a['confidence']
-            accessories_dict[key] = val
-        accessories_sorted = list(reversed(sorted(accessories_dict.items(), key=lambda kv: kv[1])))
-        if accessories_sorted.__len__() > 0:
-            first_accessory, confidence = accessories_sorted[0]
-            draw_text(output_image, "Accessories: " + first_accessory + " " + str(confidence*100) + "%", x, y, bold=True)
-            del accessories_sorted[0]
+        try:
+            # Emotions
+            emotions = face_attributes.get('emotion', {})
+            emotions_sorted = list(reversed(sorted(emotions.items(), key=lambda kv: kv[1])))
+            first_emotion, confidence = emotions_sorted[0]
+            draw_text(output_image, "Emotion: " + first_emotion + " " + str(confidence*100) + "%", x, y, bold=True)
+            del emotions_sorted[0]
             y = y + padding_bottom
-            y = draw_attributes(output_image, x, y, padding_bottom, accessories_sorted)
+            y = draw_attributes(output_image, x, y, padding_bottom, emotions_sorted)
+            y = y + padding_bottom
+        except IndexError:
+            print("Index error - Emotions")
 
-        # Facial hair
-        facial_hair_attributes = face_attributes['facialHair']
-        facial_hair_sorted = list(reversed(sorted(facial_hair_attributes.items(), key=lambda kv: kv[1])))
-        first_facial_hair, confidence = facial_hair_sorted[0]
-        draw_text(output_image, "Facial Hair: " + first_facial_hair + " " + str(confidence * 100) + "%", x, y, bold=True)
-        del facial_hair_sorted[0]
-        y = y + padding_bottom
-        y = draw_attributes(output_image, x, y, padding_bottom, facial_hair_sorted)
-        y = y + padding_bottom
+        try:
+            # Gender
+            gender_val = face_attributes['gender']
+            draw_text(output_image, "Gender: " + gender_val, x, y, bold=True)
+            y = y + padding_bottom
+            y = y + padding_bottom
+        except IndexError:
+            print("Index error - Gender")
 
-        # Smile
-        smile_val = face_attributes['smile']
-        draw_text(output_image, "Smile: " + str(smile_val), x, y, bold=True)
-        y = y + padding_bottom
-        y = y + padding_bottom
+        try:
+            # Age
+            age_val = face_attributes['age']
+            draw_text(output_image, "Age: " + str(age_val), x, y, bold=True)
+            y = y + padding_bottom
+            y = y + padding_bottom
+        except IndexError:
+            print("Index error - Age")
+
+        try:
+            # Hair
+            hair_attributes = face_attributes['hair']
+            hair_color = hair_attributes['hairColor']
+            hair_dict = {}
+            for c in hair_color:
+                key = c['color']
+                val = c['confidence']
+                hair_dict[key] = val
+            hair_sorted = list(reversed(sorted(hair_dict.items(), key=lambda kv: kv[1])))
+            first_hair, confidence = hair_sorted[0]
+            draw_text(output_image, "Hair: " + first_hair + " " + str(confidence*100) + "%", x, y, bold=True)
+            del hair_sorted[0]
+            y = y + padding_bottom
+            y = draw_attributes(output_image, x, y, padding_bottom, hair_sorted)
+            y = y + padding_bottom
+        except IndexError:
+            print("Index error - Hair")
+
+        try:
+            # Accessories
+            accessories_attributes = face_attributes['accessories']
+            accessories_dict = {}
+            for a in accessories_attributes:
+                key = a['type']
+                val = a['confidence']
+                accessories_dict[key] = val
+            accessories_sorted = list(reversed(sorted(accessories_dict.items(), key=lambda kv: kv[1])))
+            if accessories_sorted.__len__() > 0:
+                first_accessory, confidence = accessories_sorted[0]
+                draw_text(output_image, "Accessories: " + first_accessory + " " + str(confidence*100) + "%", x, y, bold=True)
+                del accessories_sorted[0]
+                y = y + padding_bottom
+                y = draw_attributes(output_image, x, y, padding_bottom, accessories_sorted)
+        except IndexError:
+            print("Index error - Accessories")
+
+        try:
+            # Facial hair
+            facial_hair_attributes = face_attributes['facialHair']
+            facial_hair_sorted = list(reversed(sorted(facial_hair_attributes.items(), key=lambda kv: kv[1])))
+            first_facial_hair, confidence = facial_hair_sorted[0]
+            draw_text(output_image, "Facial Hair: " + first_facial_hair + " " + str(confidence * 100) + "%", x, y, bold=True)
+            del facial_hair_sorted[0]
+            y = y + padding_bottom
+            y = draw_attributes(output_image, x, y, padding_bottom, facial_hair_sorted)
+            y = y + padding_bottom
+
+            # Smile
+            smile_val = face_attributes['smile']
+            draw_text(output_image, "Smile: " + str(smile_val), x, y, bold=True)
+            y = y + padding_bottom
+            y = y + padding_bottom
+        except IndexError:
+            print("Index error - Facial hair")
 
         #cv2.imshow("data", output_image)
         return output_image
