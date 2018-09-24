@@ -75,7 +75,7 @@ class CameraController(threading.Thread):
         while not self.is_stopped():
             if picamera_exists:
                 # Get image from Pi camera
-                s = self.picamera_stream.next()
+                s = self.picamera_stream.__next__()
                 self.image = s.array
                 self.picamera_capture.truncate(0)
                 self.picamera_capture.seek(0)
@@ -116,7 +116,7 @@ class CameraController(threading.Thread):
         logging.info("Requested splitter image.")
         if self.use_splitter_port:
             if picamera_exists:
-                s = self.picamera_splitter_stream.next()
+                s = self.picamera_splitter_stream.__next__()
                 self.picamera_splitter_capture.truncate(0)
                 self.picamera_splitter_capture.seek(0)
                 return s.array
